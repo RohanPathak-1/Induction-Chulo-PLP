@@ -4,7 +4,41 @@ import { orderSchema } from "@/lib/order-schema";
 import { createStoredOrder, saveOrder, sendOrderEmails } from "@/lib/orders";
 
 export const runtime = "nodejs";
+const OFFICIAL_PRODUCTION_ORIGIN = "https://product.rohan-pathak.com.np";
 const attempts = new Map<string, { count: number; resetAt: number }>();
+
+function normalizeOrigin(value: string | undefined) {
+  if (!value?.trim()) return null;
+  const candidate = /^[a-z][a-z\d+.-]*:\/\//i.test(value) ? value : `https://${value}`;
+  try {
+    return new URL(candidate).origin;
+  } catch {
+    return null;
+  }
+}
+
+function allowedOrigins() {
+  const candidates = [
+    OFFICIAL_PRODUCTION_ORIGIN,
+    process.env.FRONTEND_URL,
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_URL,
+  ];
+
+  if (process.env.NODE_ENV !== "production") {
+    candidates.push("http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:3001");
+  }
+
+  return new Set(candidates.map(normalizeOrigin).filter((origin): origin is string => Boolean(origin)));
+}
+
+function requestOriginIsAllowed(request: NextRequest) {
+  const originHeader = request.headers.get("origin");
+  if (!originHeader) return true;
+  const origin = normalizeOrigin(originHeader);
+  return Boolean(origin && allowedOrigins().has(origin));
+}
 
 function rateLimited(ip: string) {
   const now = Date.now();
@@ -16,9 +50,7 @@ function rateLimited(ip: string) {
 
 export async function POST(request: NextRequest) {
   try {
-    const allowedOrigin = process.env.FRONTEND_URL?.replace(/\/$/, "");
-    const origin = request.headers.get("origin")?.replace(/\/$/, "");
-    if (allowedOrigin && origin && origin !== allowedOrigin) return NextResponse.json({ message: "Request origin is not allowed." }, { status: 403 });
+    if (!requestOriginIsAllowed(request)) return NextResponse.json({ message: "Request origin is not allowed." }, { status: 403 });
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     if (rateLimited(ip)) return NextResponse.json({ message: "धेरै प्रयास भयो। कृपया एक मिनेटपछि फेरि प्रयास गर्नुहोस्।" }, { status: 429 });
     const idempotencyKey = request.headers.get("idempotency-key");

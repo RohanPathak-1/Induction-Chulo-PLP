@@ -66,11 +66,11 @@ const en = {
     imageAlt: "Cooking with a countertop electric cooker",
   },
   reviews: {
-    eyebrow: "Sample testimonials",
-    title: "A Realistic Review Experience",
-    description: "These sample testimonials demonstrate how verified customer feedback can appear here later.",
-    label: "Demo Reviews",
-    ratingLabel: "5-star demo rating",
+    eyebrow: "Customer experiences",
+    title: "Customer Review Experiences",
+    description: "Discover how customer feedback and experiences are presented at VoltMart Nepal.",
+    disclosure: "Sample reviews for demonstration purposes.",
+    ratingLabel: "5-star rating",
     cards: [
       { name: "Suman Shrestha", location: "Kathmandu", review: "The product looks compact and practical for everyday kitchen use. I like the simple design and convenient cooking experience." },
       { name: "Puja Adhikari", location: "Bhaktapur", review: "I was looking for a modern electric cooking option for my kitchen. The design is neat and the ordering process seems easy." },
@@ -257,11 +257,11 @@ const ne: Translation = {
     imageAlt: "विद्युतीय चुलोमा खाना पकाउँदै",
   },
   reviews: {
-    eyebrow: "नमुना प्रतिक्रिया",
-    title: "ग्राहक प्रतिक्रियाको नमुना",
-    description: "यी नमुना प्रतिक्रियाले भविष्यमा प्रमाणित ग्राहक अनुभव कसरी देखाउन सकिन्छ भन्ने प्रस्तुत गर्छन्।",
-    label: "नमुना प्रतिक्रिया",
-    ratingLabel: "५-तारे नमुना मूल्याङ्कन",
+    eyebrow: "ग्राहक अनुभवहरू",
+    title: "ग्राहक समीक्षा अनुभवहरू",
+    description: "VoltMart Nepal मा ग्राहक प्रतिक्रिया र अनुभवहरू कसरी प्रस्तुत गरिन्छन् भन्ने जान्नुहोस्।",
+    disclosure: "प्रदर्शन प्रयोजनका लागि नमुना समीक्षाहरू।",
+    ratingLabel: "५-तारे मूल्याङ्कन",
     cards: [
       { name: "सुमन श्रेष्ठ", location: "काठमाडौं", review: "उत्पादन सानो र दैनिक भान्सा प्रयोगका लागि उपयोगी देखिन्छ। यसको सरल डिजाइन र सुविधाजनक खाना पकाउने अनुभव मन पर्छ।" },
       { name: "पूजा अधिकारी", location: "भक्तपुर", review: "म भान्साका लागि आधुनिक विद्युतीय खाना पकाउने विकल्प खोज्दै थिएँ। डिजाइन सफा छ र अर्डर प्रक्रिया सजिलो देखिन्छ।" },
